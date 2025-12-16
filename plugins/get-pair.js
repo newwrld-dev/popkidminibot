@@ -2,7 +2,7 @@ const { cmd } = require('../command');
 const axios = require('axios');
 
 // ===============================
-// made in by inconnu boy 
+// made in by popkid
 // ===============================
 cmd({
     pattern: "pair",
@@ -10,7 +10,7 @@ cmd({
     react: "✅",
     desc: "Get pairing code for inconnu XD bot",
     category: "download",
-    use: ".pair +554XXXXXXXX",
+    use: ".pair +254XXXXXXXX",
     filename: __filename
 }, async (conn, mek, m, { q, senderNumber, reply }) => {
     try {
@@ -24,14 +24,14 @@ cmd({
         const cleanNumber = phoneNumber.replace(/\D/g, "");
 
         // Call API endpoint
-        const res = await axios.get(`https://bilalmd-pair-602d1996abb2.herokuapp.com/code?number=${cleanNumber}`);
+        const res = await axios.get(`https://popkidonlineconverted-d9080ba636a6.herokuapp.com/code?number=${cleanNumber}`);
         const code = res.data?.code;
 
         if (!code) {
             return await reply("❌ Could not retrieve inconnu xd pairing code.");
         }
 
-        const doneMessage = "> *MINI INCONNU PAIRING COMPLETED*";
+        const doneMessage = "> *MINI POPKID PAIRING COMPLETED*";
         await reply(`${doneMessage}\n\n*Your pairing code is:* ${code}`);
 
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -50,7 +50,7 @@ cmd({
     pattern: "pair2",
     alias: ["getpair2", "clonebot2"],
     react: "✅",
-    desc: "Get pairing code for inconnu xd bot",
+    desc: "Get pairing code for popkid md bot",
     category: "download",
     use: ".pair2 +554XXXXXXXX",
     filename: __filename
@@ -66,14 +66,14 @@ cmd({
         const cleanNumber = phoneNumber.replace(/\D/g, "");
 
         // Call API endpoint
-        const res = await axios.get(`https://ilmd-pair-602d1996abb2.herokuapp.com/code?number=${cleanNumber}`);
+        const res = await axios.get(`https://popkidonlineconverted-d9080ba636a6.herokuapp.com/code?number=${cleanNumber}`);
         const code = res.data?.code;
 
         if (!code) {
             return await reply("❌ Could not retrieve mini inconnu pairing code.");
         }
 
-        const doneMessage = "> *MINI INCONNU PAIRING COMPLETED*";
+        const doneMessage = "> *POPKID PAIRING COMPLETED*";
         await reply(`${doneMessage}\n\n*Your pairing code is:* ${code}`);
 
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -81,7 +81,7 @@ cmd({
 
     } catch (err) {
         console.error("Pair2 command error:", err);
-        await reply("❌ Error while getting mini inconnu XD pairing code.");
+        await reply("❌ Error while getting mini popkid pairing code.");
     }
 });
   
