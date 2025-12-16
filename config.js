@@ -21,21 +21,21 @@ module.exports = {
 
   MAX_RETRIES: 3,
 
-  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/EcOPWEvs03f0iLCk4wradO?mode=hqrt3',
+  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/BRh9Hn12AGh7AKT4HTqXK5?mode=hqrc',
 
   ADMIN_LIST_PATH: './admin.json',
-  IMAGE_PATH: 'https://files.catbox.moe/6oriof.jpg',
+  IMAGE_PATH: 'https://files.catbox.moe/a93xcb.jpg',
 
-  NEWSLETTER_JID: '120363403408693274@newsletter',
+  NEWSLETTER_JID: '120363289379419860@newsletter',
   NEWSLETTER_MESSAGE_ID: '428',
 
   OTP_EXPIRY: 300000,
 
-  OWNER_NUMBER: '923078071982',
+  OWNER_NUMBER: '254732297194',
 
   DEV_MODE: 'false',
 
-  CHANNEL_LINK: 'https://whatsapp.com/channel/0029VbBlpT396H4JPxNF7707',
+  CHANNEL_LINK: 'https://whatsapp.com/channel/0029VacgxK96hENmSRMRxx1r',
 
   WORK_TYPE: "public",
 
