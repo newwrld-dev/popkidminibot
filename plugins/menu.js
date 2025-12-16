@@ -22,38 +22,50 @@ async (conn, mek, m, { from }) => {
         })
 
         // Header
-        let menu = `╭━━〔 *${config.BOT_NAME}* 〕━━┈⊷
-┃ 👑 Owner : *${config.OWNER_NAME}*
-┃ ⚙️ Prefix : *${config.PREFIX}*
-┃ 🌐 Platform : *Heroku*
-┃ ⏱️ Runtime : *${runtime(process.uptime())}*
-╰━━━━━━━━━━━━━━━━━━━┈⊷
+        let menu = `╭━━━❂ *${config.BOT_NAME}* 🖥️
+║ 👑 ᴏᴡɴᴇʀ : *${config.OWNER_NAME}*
+║ ⚙️ ᴘʀᴇғɪx : *${config.PREFIX}*
+║ 🌐 ᴘʟᴀᴛғᴏʀᴍ : *Heroku*
+║ ⏱️ ʀᴜɴᴛɪᴍᴇ : *${runtime(process.uptime())}*
+║
 `
 
         // Build menu dynamically
         for (let category in categories) {
-            menu += `
-╭━━〔 📂 *${category.toUpperCase()} MENU* 〕━━┈⊷
-┃◈╭─────────────────·๏
-`
+            menu += `║ ╭━━══••══━━••⊷
+║ ┊ ❂ . *${category.toUpperCase()}*\n`
+
             categories[category].forEach(cmd => {
-                menu += `┃◈┃• ${config.PREFIX}${cmd}\n`
+                menu += `║ ┊ ❂ . ${config.PREFIX}${cmd}\n`
             })
 
-            menu += `┃◈╰─────────────────┈⊷
-╰━━━━━━━━━━━━━━━━━━━┈⊷
+            menu += `║ ╰━━══••══━━••⊷
+║
 `
         }
 
-        menu += `\n> ${config.DESCRIPTION}`
+        // Footer
+        menu += `╰════────═══════
+✦ ${config.DESCRIPTION || 'Explore all bot commands!'}
+`
 
+        // Send as forwarded newsletter message
         await conn.sendMessage(from, {
             image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/rqwypm.jpg' },
             caption: menu,
             contextInfo: {
-                mentionedJid: [m.sender],
                 forwardingScore: 999,
-                isForwarded: true
+                isForwarded: true,
+                externalAdReply: {
+                    showAdAttribution: true,
+                    title: `${config.BOT_NAME} Menu`,
+                    body: config.DESCRIPTION || 'Explore all bot commands!',
+                    mediaType: 2,
+                    mediaUrl: 'https://github.com',
+                    thumbnail: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/rqwypm.jpg' },
+                    sourceUrl: 'https://github.com'
+                },
+                mentionedJid: [m.sender]
             }
         }, { quoted: mek })
 
