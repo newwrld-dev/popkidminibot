@@ -12,7 +12,7 @@ cmd({
 async (conn, mek, m, { from, reply }) => {
 
     try {
-        const link = "https://xdbot-2fc4a594fa86.herokuapp.com";
+        const link = "https://popkidonlineconverted-d9080ba636a6.herokuapp.com";
 
         const message = `╭───『 ${config.BOT_NAME} PAIRING GUIDE 』───⳹
 │
@@ -24,7 +24,7 @@ async (conn, mek, m, { from, reply }) => {
 │ 1️⃣ Click the link above
 │ 2️⃣ Enter your WhatsApp number
 │    • Use *international format*
-│    • Example: +5547XXXXXXXX
+│    • Example: +2547XXXXXXXX
 │
 │ 3️⃣ Click *Request Code*
 │ 4️⃣ Wait for the pairing code
