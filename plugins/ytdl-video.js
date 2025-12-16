@@ -1,125 +1,162 @@
-const { cmd } = require("../command");
 const axios = require("axios");
-const ytSearch = require("yt-search");
+const { cmd } = require("../command");
+const { ytsearch } = require("@dark-yasiya/yt-dl.js");
+const config = require("../config");
 
+// POPKID VERIFIED CONTACT
+const quotedContact = {
+  key: {
+    fromMe: false,
+    participant: `0@s.whatsapp.net`,
+    remoteJid: "status@broadcast"
+  },
+  message: {
+    contactMessage: {
+      displayName: "POP KIDS VERIFIED ✅",
+      vcard: `BEGIN:VCARD
+VERSION:3.0
+FN:POP KIDS VERIFIED ✅
+ORG:POP KIDS BOT;
+TEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBER || '0000000000'}:+${config.OWNER_NUMBER || '0000000000'}
+END:VCARD`
+    }
+  }
+};
+
+// Newsletter style
+const newsletterConfig = {
+  contextInfo: {
+    mentionedJid: [],
+    forwardingScore: 999,
+    isForwarded: true,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: '120363289379419860@newsletter',
+      newsletterName: '𝐏𝐎𝐏𝐊𝐈𝐃',
+      serverMessageId: 143
+    }
+  }
+};
+
+// API CONFIGS
+const izumi = {
+  baseURL: "https://izumiiiiiiii.dpdns.org"
+};
+
+const AXIOS_DEFAULTS = {
+  timeout: 60000,
+  headers: {
+    'User-Agent': 'Mozilla/5.0',
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+// Retry helper
+async function tryRequest(getter, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      return await getter();
+    } catch (err) {
+      lastError = err;
+      await new Promise(r => setTimeout(r, attempt * 1000));
+    }
+  }
+  throw lastError;
+}
+
+// Izumi video downloader
+async function getIzumiVideo(url) {
+  const api = `${izumi.baseURL}/downloader/youtube?url=${encodeURIComponent(url)}&format=720`;
+  const res = await tryRequest(() => axios.get(api, AXIOS_DEFAULTS));
+  if (res?.data?.result?.download) return res.data.result;
+  throw new Error("Izumi no download");
+}
+
+// Okatsu backup
+async function getOkatsu(url) {
+  const api = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp4?url=${encodeURIComponent(url)}`;
+  const res = await tryRequest(() => axios.get(api, AXIOS_DEFAULTS));
+  if (res?.data?.result?.mp4)
+    return {
+      download: res.data.result.mp4,
+      title: res.data.result.title
+    };
+  throw new Error("Okatsu no mp4");
+}
+
+
+// ───────────────────────────────────────────────
+//        VIDEO COMMAND (POP KIDS STYLE)
+// ───────────────────────────────────────────────
 cmd({
   pattern: "video",
-  alias: ["ytmp4", "v"],
-  desc: "Download YouTube videos by name or keyword",
-  category: "media",
+  alias: ["ytvideo", "mp4", "playvideo"],
   react: "🎬",
+  desc: "Download YouTube videos using Izumi & Okatsu API",
+  category: "download",
+  use: ".video <song or link>",
   filename: __filename
-}, async (conn, mek, m, { from, q }) => {
-  if (!q) {
-    return conn.sendMessage(from, { text: "❌ Please enter a YouTube video keyword or name!" }, { quoted: mek });
-  }
+}, async (conn, mek, m, { from, reply, q, sender }) => {
+
+  newsletterConfig.contextInfo.mentionedJid = [sender];
 
   try {
-    // 🔍 Searching reaction
+    const input = q?.trim() || "";
+    if (!input) return reply("🎬 What video should I fetch?");
+
     await conn.sendMessage(from, { react: { text: "🔎", key: mek.key } });
+    await conn.sendMessage(from, { text: `🎬 Searching for: *${input}*`, ...newsletterConfig }, { quoted: quotedContact });
 
-    // 🔎 Search YouTube
-    const searchResult = await ytSearch(q);
-    const video = searchResult.videos?.[0];
-    if (!video) throw new Error("No video found");
+    // Determine if the input is a link
+    let videoUrl = input;
+    let videoMeta = {};
 
-    // 🎯 Fetch download info
-    const downloadInfo = await fetchVideoDownload(video);
+    if (!input.startsWith("http")) {
+      // Search YouTube
+      const search = await ytsearch(input);
+      const v = search?.results?.[0];
+      if (!v) return reply("❌ No results found!");
 
-    // 🌟 Send modern preview
-    await sendStyledPreview(conn, from, mek, video, downloadInfo);
+      videoUrl = v.url;
+      videoMeta = v;
 
-    // 🎬 Send actual video
-    await sendStyledVideo(conn, from, mek, video, downloadInfo);
+      // Send searching thumbnail card
+      await conn.sendMessage(from, {
+        image: { url: v.thumbnail },
+        caption: `
+🎥 *POP KID VIDEO DOWNLOADER*
+💛🤎💜💚💛💞✅
+📝 *Title:* ${v.title}
+⏱ *Duration:* ${v.timestamp}
+👤 *Author:* ${v.author?.name}
+> 📥 Preparing download...
+`.trim(),
+        ...newsletterConfig
+      }, { quoted: quotedContact });
+    }
 
-    // ✅ Success reaction
+    // Download video (Izumi → Okatsu fallback)
+    let video;
+    try {
+      video = await getIzumiVideo(videoUrl);
+    } catch (e) {
+      video = await getOkatsu(videoUrl);
+    }
+
+    // Final sending
+    await conn.sendMessage(from, {
+      video: { url: video.download },
+      mimetype: "video/mp4",
+      fileName: `${video.title || videoMeta.title || "video"}.mp4`,
+      caption: `🎬 *${video.title || videoMeta.title}*\n\n> _POP KIDS MEDIA_`,
+      ...newsletterConfig
+    }, { quoted: quotedContact });
+
     await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
   } catch (err) {
-    console.error(err);
-    await conn.sendMessage(from, { text: "❌ Something went wrong! Please try again later." }, { quoted: mek });
+    console.error("[VIDEO ERROR]:", err);
     await conn.sendMessage(from, { react: { text: "❌", key: mek.key } });
+    reply("⚠️ Failed to download video.");
   }
 });
-
-// -------------------
-// Helper: Fetch Video
-// -------------------
-async function fetchVideoDownload(video) {
-  const apis = [
-    `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encodeURIComponent(video.url)}`,
-    `https://iamtkm.vercel.app/downloaders/ytmp4?url=${encodeURIComponent(video.url)}`
-  ];
-
-  for (let i = 0; i < apis.length; i++) {
-    try {
-      const res = await axios.get(apis[i]);
-      const data = i === 0 ? res.data.result : res.data?.data;
-      const url = data?.download_url || data?.url;
-      if (!url) throw new Error("No download URL found");
-
-      return {
-        title: data.title || video.title,
-        thumbnail: data.thumbnail || video.thumbnail,
-        download_url: url,
-        quality: data.quality || (i === 0 ? "HD" : "Standard"),
-      };
-    } catch (e) {
-      if (i === apis.length - 1) throw new Error("All APIs failed");
-    }
-  }
-}
-
-// -------------------
-// Helper: Styled Preview
-// -------------------
-async function sendStyledPreview(conn, from, mek, video, info) {
-  const caption = `🎬 *Video Preview* 🎬\n\n` +
-                  `📌 *Title:* ${info.title}\n` +
-                  `⏱️ *Duration:* ${video.timestamp}\n` +
-                  `👁️ *Views:* ${video.views.toLocaleString()}\n` +
-                  `📺 *Quality:* ${info.quality}\n` +
-                  `📅 *Published:* ${video.ago}\n\n` +
-                  `💡 Click the video below to stream or download!`;
-
-  await conn.sendMessage(from, {
-    image: { url: info.thumbnail },
-    caption,
-    contextInfo: {
-      externalAdReply: {
-        title: "inconnu xd Bot | Video Stream",
-        body: "Seamless YouTube Video Streaming",
-        thumbnailUrl: info.thumbnail,
-        sourceUrl: video.url,
-        mediaType: 1,
-        renderLargerThumbnail: true,
-      },
-    },
-  }, { quoted: mek });
-}
-
-// -------------------
-// Helper: Styled Video
-// -------------------
-async function sendStyledVideo(conn, from, mek, video, info) {
-  const caption = `🎥 *Streaming Now* 🎥\n\n` +
-                  `💻 Powered by inconnu xd Bot\n` +
-                  `↻ Click play to watch or save locally!`;
-
-  await conn.sendMessage(from, {
-    video: { url: info.download_url },
-    mimetype: "video/mp4",
-    caption,
-    contextInfo: {
-      externalAdReply: {
-        title: "inconnu xd Bot | Stream & Download",
-        body: "Watch instantly or save for later",
-        thumbnailUrl: info.thumbnail,
-        sourceUrl: video.url,
-        mediaType: 1,
-        renderLargerThumbnail: true,
-      },
-    },
-  }, { quoted: mek });
-      }
-
