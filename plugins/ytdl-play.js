@@ -3,8 +3,8 @@ const fetch = require('node-fetch');
 const yts = require('yt-search'); // search support
 
 cmd({
-    pattern: "play2",
-    alias: ["ytplay2", "music2"],
+    pattern: "play",
+    alias: ["ytplay", "music"],
     react: "🎶",
     desc: "Download YouTube audio using GTech API",
     category: "download",
