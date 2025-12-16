@@ -102,7 +102,7 @@ const defaultConfig = {
   MAX_RETRIES: 3,
   GROUP_INVITE_LINK: 'https://chat.whatsapp.com/BRh9Hn12AGh7AKT4HTqXK5?mode=hqrc',
   ADMIN_LIST_PATH: './admin.json',
-  IMAGE_PATH: 'https://files.catbox.moe/6oriof.jpg',
+  IMAGE_PATH: 'https://files.catbox.moe/a93xcb.jpg',
   NEWSLETTER_JID: [
     '120363289379419860@newsletter'
   ],
