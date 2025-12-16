@@ -12,7 +12,8 @@ module.exports = {
   AUTO_VIEW_STATUS: 'true',
   AUTO_LIKE_STATUS: 'true',
   AUTO_RECORDING: 'true',
-
+  ANTI_CALL: 'false',
+    
   AUTO_LIKE_EMOJI: ['🖤', '🍬', '💫', '🎈', '💚', '🎶', '❤️', '🧫', '⚽'],
 
   PREFIX: config.PREFIX || '.',
@@ -45,6 +46,7 @@ module.exports = {
   TELEGRAM_CHAT_ID: config.TELEGRAM_CHAT_ID || '7825445776',
 
   AUTO_REACT: config.AUTO_REACT || 'true',
+  ANTI_CALL: config.ANTI_CALL || 'false',
   AUTO_STATUS_SEEN: config.AUTO_STATUS_SEEN || "true",
   AUTO_STATUS_REACT: config.AUTO_STATUS_REACT || "true",
   AUTO_STATUS_REPLY: config.AUTO_STATUS_REPLY || "false",
