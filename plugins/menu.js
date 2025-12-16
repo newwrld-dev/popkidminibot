@@ -51,7 +51,7 @@ async (conn, mek, m, { from }) => {
 
         // Send as forwarded newsletter message
         await conn.sendMessage(from, {
-            image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/rqwypm.jpg' },
+            image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/a93xcb.jpg' },
             caption: menu,
             contextInfo: {
                 forwardingScore: 999,
@@ -62,7 +62,7 @@ async (conn, mek, m, { from }) => {
                     body: config.DESCRIPTION || 'Explore all bot commands!',
                     mediaType: 2,
                     mediaUrl: 'https://github.com',
-                    thumbnail: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/rqwypm.jpg' },
+                    thumbnail: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/a93xcb.jpg' },
                     sourceUrl: 'https://github.com'
                 },
                 mentionedJid: [m.sender]
