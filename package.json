@@ -1,11 +1,11 @@
 
 {
-  "name": "POPKIDL-MD",
+  "name": "POPKID-MD",
   "version": "2.0.0",
   "description": "A WhatsApp Bot Created By POPKID BOT",
-  "main": "inconnu.js",
+  "main": "popkid.js",
   "scripts": {
-    "start": "pm2 start popkid.js --deep-monitoring --attach --name POPKIDL-MD",
+    "start": "pm2 start popkid.js --deep-monitoring --attach --name POPKID-MD",
     "stop": "pm2 stop POPKID-MD",
     "restart": "pm2 restart POPKID-MD"
   },
