@@ -95,7 +95,7 @@ const resetSettings = async (number) => {
 const defaultConfig = {
   AUTO_VIEW_STATUS: 'true',
   AUTO_LIKE_STATUS: 'true',
-  AUTO_RECORDING: 'true',
+  AUTO_RECORDING: 'false',
   AUTO_LIKE_EMOJI: ['🖤', '🍬', '💫', '🎈', '💚', '🎶', '❤️', '🧫', '⚽'],
   PREFIX: config.PREFIX || '.',
   BOT_FOOTER: '> © MADE BY POPKID',
