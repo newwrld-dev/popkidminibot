@@ -8,233 +8,221 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@300;500&display=swap');
 
 :root{
-  --neon1:#ff2b2b;
-  --neon2:#b30000;
-  --neon3:#ff4d6d;
-  --bg1:#0a0505;
-  --bg2:#130707;
-  --glass:rgba(255,255,255,.06);
+  --primary:#00ffa6;
+  --secondary:#00c97f;
+  --accent:#00ffcc;
 }
 
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 
+/* 🌌 BACKGROUND */
 body{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at top, rgba(255,43,43,.12), transparent 55%),
-    linear-gradient(135deg,var(--bg1),var(--bg2));
   font-family:Rajdhani,sans-serif;
   color:#fff;
   overflow:hidden;
+  background:#010101;
 }
 
-/* grid */
-body::before{
-  content:"";
+/* stars */
+.stars{
   position:absolute;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,43,43,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,43,43,.06) 1px,transparent 1px);
-  background-size:40px 40px;
-  animation:gridmove 20s linear infinite;
+  width:100%;
+  height:100%;
+  z-index:-3;
+}
+.star{
+  position:absolute;
+  width:2px;height:2px;
+  background:#fff;
+  opacity:.8;
+  border-radius:50%;
+  animation:starMove linear infinite;
+}
+@keyframes starMove{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-10vh)}
+}
+
+/* gradient waves */
+.bg-glow{
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle, rgba(0,255,166,.15), transparent 60%);
+  animation:moveGlow 12s infinite alternate;
   z-index:-2;
 }
-
-@keyframes gridmove{
-  from{transform:translateY(0)}
-  to{transform:translateY(40px)}
+@keyframes moveGlow{
+  from{transform:translate(-25%,-25%)}
+  to{transform:translate(0,0)}
 }
 
-/* scanlines */
-body::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    rgba(255,255,255,.04) 1px,
-    transparent 1px
-  );
-  background-size:100% 3px;
-  pointer-events:none;
-  opacity:.15;
-}
-
-/* particles */
-.particles{
-  position:absolute;
-  inset:0;
-  z-index:-1;
-}
-.particle{
-  position:absolute;
-  width:4px;height:4px;
-  border-radius:50%;
-  background:var(--neon1);
-  animation:float 15s linear infinite;
-  opacity:.5;
-}
-@keyframes float{
-  from{transform:translateY(120vh)}
-  to{transform:translateY(-20vh)}
-}
-
-/* card */
+/* ✨ MAIN CARD */
 .box{
-  width:100%;
-  max-width:390px;
-  padding:36px 28px;
-  border-radius:18px;
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-  backdrop-filter:blur(15px);
-  border:1px solid rgba(255,43,43,.35);
+  width:90%;
+  max-width:340px;
+  padding:30px 22px;
+  border-radius:24px;
+
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(30px);
+
+  border:1px solid rgba(0,255,166,.2);
+
   box-shadow:
-    0 0 35px rgba(255,43,43,.35),
-    inset 0 0 30px rgba(179,0,0,.35);
+    0 0 80px rgba(0,255,166,.15),
+    inset 0 0 40px rgba(0,255,166,.08);
+
+  text-align:center;
   position:relative;
   overflow:hidden;
-  transition:.4s;
+  transition:.5s;
 }
 
+/* holographic border */
 .box::before{
   content:"";
   position:absolute;
-  inset:-2px;
-  background:linear-gradient(120deg,transparent,var(--neon1),transparent);
-  opacity:.25;
-  animation:borderGlow 6s linear infinite;
+  inset:-1px;
+  border-radius:24px;
+  background:linear-gradient(120deg,transparent,var(--primary),transparent);
+  opacity:.3;
+  animation:borderFlow 6s linear infinite;
 }
-@keyframes borderGlow{
+
+@keyframes borderFlow{
   from{transform:translateX(-100%)}
   to{transform:translateX(100%)}
 }
 
+/* floating hover */
 .box:hover{
-  transform:translateY(-6px);
+  transform:translateY(-12px) scale(1.02);
   box-shadow:
-    0 0 55px rgba(255,43,43,.75),
-    inset 0 0 40px rgba(179,0,0,.55);
+    0 0 120px rgba(0,255,166,.4),
+    inset 0 0 60px rgba(0,255,166,.15);
 }
 
-/* logo */
+/* LOGO */
 .logo-text{
-  font-family:Orbitron,sans-serif;
-  font-size:30px;
-  letter-spacing:3px;
-  font-weight:800;
-  background:linear-gradient(90deg,var(--neon1),var(--neon3));
+  font-family:Orbitron;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:4px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 25px rgba(255,43,43,.9);
-  margin-bottom:12px;
+  text-shadow:0 0 25px rgba(0,255,166,.9);
+  margin-bottom:14px;
 }
 
-/* text */
+/* TEXT */
 h3{
-  color:var(--neon1);
-  text-shadow:0 0 10px var(--neon1);
-  letter-spacing:1px;
+  color:var(--primary);
+  font-size:16px;
+  margin-bottom:5px;
 }
 h6{
-  opacity:.8;
-  margin-bottom:22px;
+  opacity:.7;
+  margin-bottom:20px;
 }
 
-/* input */
+/* INPUT */
 .input-container{
   display:flex;
-  gap:6px;
   margin-bottom:18px;
 }
 .input-container input{
   flex:1;
-  padding:15px;
-  border-radius:10px 0 0 10px;
-  border:1px solid rgba(255,43,43,.4);
-  background:rgba(0,0,0,.45);
+  padding:14px;
+  border-radius:12px 0 0 12px;
+  border:none;
+  background:rgba(0,0,0,.7);
   color:#fff;
-  font-size:16px;
 }
 .input-container input:focus{
   outline:none;
-  box-shadow:0 0 18px rgba(255,43,43,.7);
+  box-shadow:0 0 20px rgba(0,255,166,.8);
 }
+
+/* BUTTON */
 .input-container button{
-  padding:15px 18px;
-  border-radius:0 10px 10px 0;
+  padding:14px 18px;
   border:none;
-  cursor:pointer;
+  border-radius:0 12px 12px 0;
   font-family:Orbitron;
-  background:linear-gradient(135deg,var(--neon2),var(--neon3));
-  color:#fff;
-  letter-spacing:1px;
-  box-shadow:0 0 20px rgba(255,43,43,.8);
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--secondary),var(--accent));
+  color:#000;
+  font-weight:bold;
+  box-shadow:0 0 25px rgba(0,255,166,.8);
   transition:.3s;
 }
 .input-container button:hover{
-  box-shadow:0 0 35px rgba(255,43,43,1);
+  transform:scale(1.07);
+  box-shadow:0 0 40px rgba(0,255,166,1);
 }
 
-/* waiting */
+/* WAIT */
 #waiting-message{
-  color:var(--neon1);
+  color:var(--primary);
   font-family:Orbitron;
-  text-shadow:0 0 12px var(--neon1);
 }
 
-/* code */
+/* CODE */
 .code-display{
   margin-top:12px;
-  padding:14px 22px;
-  border-radius:10px;
-  background:rgba(0,0,0,.5);
-  border:1px solid rgba(255,43,43,.5);
-  font-family:Orbitron;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(0,255,166,.4);
   display:flex;
-  align-items:center;
+  justify-content:center;
   gap:10px;
   cursor:pointer;
-  box-shadow:0 0 25px rgba(255,43,43,.6);
+  box-shadow:0 0 30px rgba(0,255,166,.5);
 }
 .code-display:hover{
   transform:scale(1.05);
 }
 .code-value{
-  color:var(--neon1);
-  text-shadow:0 0 12px var(--neon1);
+  color:var(--primary);
+  font-family:Orbitron;
 }
 
 /* pulse */
 .pulse{
-  animation:pulse 1.8s infinite;
+  animation:pulse 1.5s infinite;
 }
 @keyframes pulse{
-  0%{box-shadow:0 0 0 rgba(255,43,43,.8)}
-  70%{box-shadow:0 0 30px rgba(255,43,43,0)}
-  100%{box-shadow:0 0 0 rgba(255,43,43,0)}
+  0%{box-shadow:0 0 0 rgba(0,255,166,.8)}
+  70%{box-shadow:0 0 35px rgba(0,255,166,0)}
+  100%{box-shadow:0 0 0 rgba(0,255,166,0)}
 }
 </style>
 </head>
 
 <body>
-<div class="particles" id="particles"></div>
 
-<div class="box" id="box">
-  <div class="logo">
-    <div class="logo-text">PAIR CODE</div>
-  </div>
+<div class="stars" id="stars"></div>
+<div class="bg-glow"></div>
 
-  <h3 class="centered-text">∞ Link with phone number ∞</h3>
-  <h6>❤️ Enter Your Number With Country Code ❤️</h6>
+<div class="box">
+  <div class="logo-text">PAIR CODE</div>
+
+  <h3>∞ Link with phone number ∞</h3>
+  <h6>Enter Your Number With Country Code</h6>
 
   <div class="input-container">
-    <input placeholder="+254xxxxxxxx" type="tel" id="number" name="number">
+    <input placeholder="+254xxxxxxxx" type="tel" id="number">
     <button id="submit">ENTER</button>
   </div>
 
@@ -250,23 +238,26 @@ let b=document.getElementById("submit");
 let c=document.getElementById("number");
 let waitingMessage=document.getElementById("waiting-message");
 
-function createParticles(){
-  const p=document.getElementById("particles");
-  for(let i=0;i<40;i++){
-    let d=document.createElement("div");
-    d.className="particle";
-    d.style.left=Math.random()*100+"%";
-    d.style.animationDuration=10+Math.random()*20+"s";
-    p.appendChild(d);
+/* stars */
+function createStars(){
+  const s=document.getElementById("stars");
+  for(let i=0;i<100;i++){
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.left=Math.random()*100+"%";
+    star.style.animationDuration=(4+Math.random()*10)+"s";
+    s.appendChild(star);
   }
 }
-createParticles();
+createStars();
 
+/* copy */
 async function Copy(){
   let t=document.getElementById("copy-value").innerText;
   await navigator.clipboard.writeText(t);
 }
 
+/* FUNCTIONALITY (UNCHANGED) */
 b.addEventListener("click",async(e)=>{
   e.preventDefault();
   if(!c.value){
