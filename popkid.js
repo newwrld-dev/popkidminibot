@@ -1,4 +1,4 @@
-// MDE IN BY INCONNU BOY 
+// MADE BY POPKID
 
 const express = require('express');
 const app = express();
@@ -25,7 +25,7 @@ app.get('/', async (req, res, next) => {
 
 app.on('listening', () => {
   console.log(`
-INCONNU BOY IS THE BEST 👋 
+POPKID IS THE BEST 👋 
 Server running on http://0.0.0.0:${PORT}
 `);
   
