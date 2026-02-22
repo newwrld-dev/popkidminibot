@@ -22,12 +22,12 @@ module.exports = {
 
   MAX_RETRIES: 3,
 
-  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/BRh9Hn12AGh7AKT4HTqXK5?mode=hqrc',
+  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/E0rMzLcYiBBFxGGEu9RkUR',
 
   ADMIN_LIST_PATH: './admin.json',
   IMAGE_PATH: 'https://files.catbox.moe/a93xcb.jpg',
 
-  NEWSLETTER_JID: '120363289379419860@newsletter',
+  NEWSLETTER_JID: '120363423997837331@newsletter',
   NEWSLETTER_MESSAGE_ID: '428',
 
   OTP_EXPIRY: 300000,
@@ -36,7 +36,7 @@ module.exports = {
 
   DEV_MODE: 'false',
 
-  CHANNEL_LINK: 'https://whatsapp.com/channel/0029VacgxK96hENmSRMRxx1r',
+  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb70ySJHbFV91PNKuL3T',
 
   WORK_TYPE: "public",
 
