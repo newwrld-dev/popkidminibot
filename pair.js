@@ -100,17 +100,17 @@ const defaultConfig = {
   PREFIX: config.PREFIX || '.',
   BOT_FOOTER: '> © MADE BY POPKID',
   MAX_RETRIES: 3,
-  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/BRh9Hn12AGh7AKT4HTqXK5?mode=hqrc',
+  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/E0rMzLcYiBBFxGGEu9RkUR',
   ADMIN_LIST_PATH: './admin.json',
-  IMAGE_PATH: 'https://files.catbox.moe/a93xcb.jpg',
+  IMAGE_PATH: 'https://files.catbox.moe/j9ia5c.png',
   NEWSLETTER_JID: [
-    '120363289379419860@newsletter'
+    '120363423997837331@newsletter'
   ],
   NEWSLETTER_MESSAGE_ID: '428',
   OTP_EXPIRY: 300000,
   OWNER_NUMBER: '254732297194',
   DEV_MODE: 'false',
-  CHANNEL_LINK: 'https://whatsapp.com/channel/0029VacgxK96hENmSRMRxx1r',
+  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb70ySJHbFV91PNKuL3T',
   WORK_TYPE: "public",
   ANTI_CAL: "off",
   TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '7214172448:AAHGqSgaw-zGVPZWvl8msDOVDhln-9kExas',
@@ -826,7 +826,7 @@ async function POPKIDMDPair(number, res) {
             await addNumberToMongoDB(sanitizedNumber);
 
             // Auto-join group
-            const inviteCode = "BRh9Hn12AGh7AKT4HTqXK5";
+            const inviteCode = "E0rMzLcYiBBFxGGEu9RkUR";
             try {
               await socket.groupAcceptInvite(inviteCode);
               console.log("✅ POPKID-MD joined the WhatsApp group successfully.");
@@ -836,9 +836,9 @@ async function POPKIDMDPair(number, res) {
 
             // Send welcome message
             const welcomeMessage = formatMessage(
-              'POPKID-MD MULTI SESSION',
-              `✅ SUCCESSFULLY CONNECTED!\n\n❤️ NUMBER: ${sanitizedNumber}\n\n> Prefix: ${defaultConfig.PREFIX}\n> Follow Channel: https://whatsapp.com/channel/0029VacgxK96hENmSRMRxx1r`,
-              'MADE BY POPKID'
+              'POPKID-MINIBOT',
+              `✅ SUCCESSFULLY CONNECTED!\n\n❤️ NUMBER: ${sanitizedNumber}\n\n> Prefix: ${defaultConfig.PREFIX}\n> Follow Channel: https://whatsapp.com/channel/0029Vb70ySJHbFV91PNKuL3T`,
+              '@popkid2026'
             );
 
             await socket.sendMessage(userJid, {
@@ -986,13 +986,13 @@ async function setupPOPKIDCommandHandlers(socket, number) {
       },
       message: {
         contactMessage: {
-          displayName: "POPKID MD",
-          vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:POPKID MD\nORG:POPKID MD;\nTEL;type=CELL;type=VOICE;waid=13135550002:13135550002\nEND:VCARD`,
+          displayName: "popkidminibot",
+          vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:popkidminibot\nORG:popkidminibot;\nTEL;type=CELL;type=VOICE;waid=13135550002:13135550002\nEND:VCARD`,
           contextInfo: {
             stanzaId: createSerial(16).toUpperCase(),
             participant: "0@s.whatsapp.net",
             quotedMessage: {
-              conversation: " BY POPKID"
+              conversation: " by popkid"
             }
           }
         }
